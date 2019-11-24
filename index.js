@@ -5,12 +5,12 @@ const data = [
       {
         title: "남",
         image:
-          "https://lh3.googleusercontent.com/MriN-VCQm-RJCvdXIFwdLQSNXH3pC2uBwAtpyLJ2x2ofVu3oKXw1Gv_XYCAxtaT9iGVyU8bVsxRUS69OHd3nW4zQE5cmoF9U7Q=s320-l65"
+          "https://lh3.googleusercontent.com/w7nMTiE_WuihyRiOg28sMC-4Duew5aYnFWI4Jc1NP0Y0ErPOKcDydIgqvLARWVZtAnj5TcvNueEd1FbYfBFZZDGCII7-nBK4wQ=s320-l65"
       },
       {
         title: "여",
         image:
-          "https://lh3.googleusercontent.com/nP3gXQIeJwx1jjkmfdQKxe-KRCFlhYp8JHk2u4Ft3UiP5fTw9iqDcLk8u9FRRiAx8KiOBHbKtfJ3tJ7KlNKNlfFAJR6F1kuXaA=s320-l65"
+          "https://lh3.googleusercontent.com/9bZ-h-v7yb9ieKxXGn6f1funwzdoDwuGQU5CPwdmiTyS0IASerml6H2t0GlAc3iQ0BA14iC0Yp5CtmmVqhNpXOQFiW4bGgnhcg=s320-l65"
       }
     ]
   },
@@ -91,3 +91,52 @@ const data = [
     ]
   }
 ];
+
+for (let index = 0; index < data.length; index++) {
+  const element = data[index];
+  const section = document.createElement("section");
+  section.dataset.index = index;
+  section.id = index;
+
+  if (
+    index !== parseInt(document.querySelector("#content").dataset.contentIndex)
+  ) {
+    section.style.display = "none";
+  }
+
+  element.options.forEach(element => {
+    const card = document.createElement("div");
+    const img = document.createElement("img");
+    const cardContent = document.createElement("div");
+    cardContent.className = "card-content text-center";
+    cardContent.append(element.title);
+    img.src = element.image;
+    card.className = "card card-select";
+    card.append(img, cardContent);
+    card.addEventListener("click", e => {
+      // e.currentTarget.parentElement.id
+
+      const findId = "#" + (parseInt(e.currentTarget.parentElement.id) + 1);
+      console.log("TCL: findId", findId);
+
+      document.querySelector(findId);
+      document.querySelector("#content").dataset.contentIndex =
+        parseInt(e.currentTarget.parentElement.dataset.index) + 1;
+
+      document.querySelector("#content section").dataset.index;
+      console.log(document.querySelector("#content").dataset.contentIndex);
+
+      console.log(document.querySelector("#content section").dataset.index);
+      if (
+        document.querySelector("#content").dataset.contentIndex ===
+        document.querySelector("#content section").dataset.index
+      ) {
+        document.querySelector("#content section").style.display = "";
+      }
+    });
+
+    section.append(card);
+  });
+
+  document.querySelector("#content").appendChild(section);
+}
